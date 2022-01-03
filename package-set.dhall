@@ -11,14 +11,20 @@ let
   additions = [
         { name = "iterext"
         , version = "v2.0.0"
-        , repo = "https://github.com/dfinity/motoko-iterext.git"
+        , repo = "https://github.com/timohanke/motoko-iterext.git"
         , dependencies = [ "base" ] : List Text
         },
         { name = "sha2"
         , version = "v1.0.1"
-        , repo = "https://github.com/dfinity/motoko-sha2.git"
+        , repo = "https://github.com/timohanke/motoko-sha2.git"
         , dependencies = [ "base", "iterext" ] : List Text
-        }   
+        },
+        { name = "encoding"
+        , version = "v0.3.1"
+        , repo = "https://github.com/aviate-labs/encoding.mo"
+        , dependencies = [ "base" ] : List Text
+        }
+
     ]
 
 let
