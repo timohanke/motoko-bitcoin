@@ -7,7 +7,7 @@ import Iter "mo:base/Iter";
 import Debug "mo:base/Debug";
 
 module {
-    public class ChainSegment<T>(obj : T, base : Nat, n : Nat) {
+    public class ChainSegment<T>(obj : T, base : Nat, n : Nat, eqT : (T,T) -> Bool) {
         public let sequence = Buffer.Buffer<T>(n);
         sequence.add(obj);
 
@@ -21,7 +21,7 @@ module {
         public func obj_at_tip() : T { sequence.get(sequence.size() - 1) };   
         public func head_from_pos(pos : Nat) : ChainSegment<T> {
             // head includes pos
-            let head = ChainSegment<T>(obj_at_pos(pos), pos, tip_pos() - pos + 1);
+            let head = ChainSegment<T>(obj_at_pos(pos), pos, tip_pos() - pos + 1 : Nat, eqT);
             for (i in Iter.range(pos, tip_pos())) {
                 head.add(obj_at_pos(i));
             };
@@ -34,7 +34,7 @@ module {
             };            
         };
         public func extend_by(segment : ChainSegment<T>) {
-            if (obj_at_tip() != segment.obj_at_pos(0)) {
+            if (not eqT(obj_at_tip(), segment.obj_at_pos(0))) {
                 Debug.trap("extension segment does not match");
             };
             if (tip_pos() != segment.base_pos()) {
@@ -44,7 +44,7 @@ module {
             sequence.append(segment.sequence);
         };
         public func isObj(pos : Nat, obj : T) : Bool {
-            obj_at_pos(pos) == obj // equality needs to be defined for T
+            eqT(obj_at_pos(pos), obj) // equality needs to be defined for T
         };
     };
 };
