@@ -38,11 +38,22 @@ module {
         };
     };
 
-    public type BlockHeaderSummary = { version : Nat32; hashPrevBlock : Blob; hashMerkleRoot : Blob; time : Nat32; bits : Blob; nonce : Nat32; target_nat : Nat; target_blob : Blob; difficulty : Nat; hash : Blob; meets_target : Bool };
+    public type BlockHeaderValues = { 
+        version : Nat32; 
+        hashPrevBlock : Blob; 
+        hashMerkleRoot : Blob; 
+        time : Nat32; 
+        bits : Blob; 
+        nonce : Nat32; 
+        target_nat : Nat; 
+        target_blob : Blob; 
+        difficulty : Nat; 
+        hash : Blob; meets_target : Bool 
+        };
 
     public class BlockHeader(data : Blob) {
         assert(data.size() == 80);
-        // raw
+        // make raw data public
         public let raw = data;
 
         let buf4 = IterExt.BlockBuffer<Nat8>(4);
@@ -72,7 +83,18 @@ module {
         // target met?
         public let meets_target = Blob.less(hash, bits.target_as_blob);
 
-        public let summary = { version = version ; hashPrevBlock = hashPrevBlock; hashMerkleRoot = hashMerkleRoot; time = time; bits = bits.raw; nonce = nonce; target_nat = bits.target_as_nat; target_blob = bits.target_as_blob; difficulty = bits.difficulty; hash = hash ; meets_target = meets_target };
+        public let values = { 
+            version = version ; 
+            hashPrevBlock = hashPrevBlock; 
+            hashMerkleRoot = hashMerkleRoot; 
+            time = time; 
+            bits = bits.raw; 
+            nonce = nonce; 
+            target_nat = bits.target_as_nat; 
+            target_blob = bits.target_as_blob; 
+            difficulty = bits.difficulty; 
+            hash = hash; 
+            meets_target = meets_target 
+            };
     };
-
 };
