@@ -1,6 +1,4 @@
-# The ... package
+# The bitcoin package
 
-This package implements ... in Motoko for use in smart contracts (canisters) on the internet computer (IC).
-
-## Usage
+This package implements bitcoin-related data structures in Motoko for use in smart contracts (canisters) on the internet computer (IC).
 
